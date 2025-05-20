@@ -12,12 +12,18 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
-import { Route as DemoTableImport } from './routes/demo.table'
-import { Route as DemoConvexImport } from './routes/demo.convex'
+import { Route as WaitersIndexImport } from './routes/waiters/index'
+import { Route as RestaurantsIndexImport } from './routes/restaurants/index'
+import { Route as WaitersNewImport } from './routes/waiters/new'
+import { Route as WaitersWaiterIdImport } from './routes/waiters/$waiterId'
 import { Route as DemoClerkImport } from './routes/demo.clerk'
-import { Route as DemoFormSimpleImport } from './routes/demo.form.simple'
-import { Route as DemoFormAddressImport } from './routes/demo.form.address'
+import { Route as AdminRestaurantHoursImport } from './routes/admin/restaurant-hours'
+import { Route as AdminDashboardImport } from './routes/admin/dashboard'
+import { Route as AdminProductsIndexImport } from './routes/admin/products/index'
+import { Route as AdminProductsUnavailableImport } from './routes/admin/products/unavailable'
+import { Route as AdminProductsNewImport } from './routes/admin/products/new'
+import { Route as WaitersWaiterIdOrdersOrderIdImport } from './routes/waiters/$waiterId.orders.$orderId'
+import { Route as AdminProductsProductIdEditImport } from './routes/admin/products/$productId.edit'
 
 // Create/Update Routes
 
@@ -27,21 +33,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
+const WaitersIndexRoute = WaitersIndexImport.update({
+  id: '/waiters/',
+  path: '/waiters/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DemoTableRoute = DemoTableImport.update({
-  id: '/demo/table',
-  path: '/demo/table',
+const RestaurantsIndexRoute = RestaurantsIndexImport.update({
+  id: '/restaurants/',
+  path: '/restaurants/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DemoConvexRoute = DemoConvexImport.update({
-  id: '/demo/convex',
-  path: '/demo/convex',
+const WaitersNewRoute = WaitersNewImport.update({
+  id: '/waiters/new',
+  path: '/waiters/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const WaitersWaiterIdRoute = WaitersWaiterIdImport.update({
+  id: '/waiters/$waiterId',
+  path: '/waiters/$waiterId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -51,17 +63,50 @@ const DemoClerkRoute = DemoClerkImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DemoFormSimpleRoute = DemoFormSimpleImport.update({
-  id: '/demo/form/simple',
-  path: '/demo/form/simple',
+const AdminRestaurantHoursRoute = AdminRestaurantHoursImport.update({
+  id: '/admin/restaurant-hours',
+  path: '/admin/restaurant-hours',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DemoFormAddressRoute = DemoFormAddressImport.update({
-  id: '/demo/form/address',
-  path: '/demo/form/address',
+const AdminDashboardRoute = AdminDashboardImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AdminProductsIndexRoute = AdminProductsIndexImport.update({
+  id: '/admin/products/',
+  path: '/admin/products/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminProductsUnavailableRoute = AdminProductsUnavailableImport.update({
+  id: '/admin/products/unavailable',
+  path: '/admin/products/unavailable',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminProductsNewRoute = AdminProductsNewImport.update({
+  id: '/admin/products/new',
+  path: '/admin/products/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const WaitersWaiterIdOrdersOrderIdRoute =
+  WaitersWaiterIdOrdersOrderIdImport.update({
+    id: '/orders/$orderId',
+    path: '/orders/$orderId',
+    getParentRoute: () => WaitersWaiterIdRoute,
+  } as any)
+
+const AdminProductsProductIdEditRoute = AdminProductsProductIdEditImport.update(
+  {
+    id: '/admin/products/$productId/edit',
+    path: '/admin/products/$productId/edit',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -74,6 +119,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/restaurant-hours': {
+      id: '/admin/restaurant-hours'
+      path: '/admin/restaurant-hours'
+      fullPath: '/admin/restaurant-hours'
+      preLoaderRoute: typeof AdminRestaurantHoursImport
+      parentRoute: typeof rootRoute
+    }
     '/demo/clerk': {
       id: '/demo/clerk'
       path: '/demo/clerk'
@@ -81,126 +140,212 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoClerkImport
       parentRoute: typeof rootRoute
     }
-    '/demo/convex': {
-      id: '/demo/convex'
-      path: '/demo/convex'
-      fullPath: '/demo/convex'
-      preLoaderRoute: typeof DemoConvexImport
+    '/waiters/$waiterId': {
+      id: '/waiters/$waiterId'
+      path: '/waiters/$waiterId'
+      fullPath: '/waiters/$waiterId'
+      preLoaderRoute: typeof WaitersWaiterIdImport
       parentRoute: typeof rootRoute
     }
-    '/demo/table': {
-      id: '/demo/table'
-      path: '/demo/table'
-      fullPath: '/demo/table'
-      preLoaderRoute: typeof DemoTableImport
+    '/waiters/new': {
+      id: '/waiters/new'
+      path: '/waiters/new'
+      fullPath: '/waiters/new'
+      preLoaderRoute: typeof WaitersNewImport
       parentRoute: typeof rootRoute
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryImport
+    '/restaurants/': {
+      id: '/restaurants/'
+      path: '/restaurants'
+      fullPath: '/restaurants'
+      preLoaderRoute: typeof RestaurantsIndexImport
       parentRoute: typeof rootRoute
     }
-    '/demo/form/address': {
-      id: '/demo/form/address'
-      path: '/demo/form/address'
-      fullPath: '/demo/form/address'
-      preLoaderRoute: typeof DemoFormAddressImport
+    '/waiters/': {
+      id: '/waiters/'
+      path: '/waiters'
+      fullPath: '/waiters'
+      preLoaderRoute: typeof WaitersIndexImport
       parentRoute: typeof rootRoute
     }
-    '/demo/form/simple': {
-      id: '/demo/form/simple'
-      path: '/demo/form/simple'
-      fullPath: '/demo/form/simple'
-      preLoaderRoute: typeof DemoFormSimpleImport
+    '/admin/products/new': {
+      id: '/admin/products/new'
+      path: '/admin/products/new'
+      fullPath: '/admin/products/new'
+      preLoaderRoute: typeof AdminProductsNewImport
       parentRoute: typeof rootRoute
+    }
+    '/admin/products/unavailable': {
+      id: '/admin/products/unavailable'
+      path: '/admin/products/unavailable'
+      fullPath: '/admin/products/unavailable'
+      preLoaderRoute: typeof AdminProductsUnavailableImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/products/': {
+      id: '/admin/products/'
+      path: '/admin/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminProductsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/products/$productId/edit': {
+      id: '/admin/products/$productId/edit'
+      path: '/admin/products/$productId/edit'
+      fullPath: '/admin/products/$productId/edit'
+      preLoaderRoute: typeof AdminProductsProductIdEditImport
+      parentRoute: typeof rootRoute
+    }
+    '/waiters/$waiterId/orders/$orderId': {
+      id: '/waiters/$waiterId/orders/$orderId'
+      path: '/orders/$orderId'
+      fullPath: '/waiters/$waiterId/orders/$orderId'
+      preLoaderRoute: typeof WaitersWaiterIdOrdersOrderIdImport
+      parentRoute: typeof WaitersWaiterIdImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface WaitersWaiterIdRouteChildren {
+  WaitersWaiterIdOrdersOrderIdRoute: typeof WaitersWaiterIdOrdersOrderIdRoute
+}
+
+const WaitersWaiterIdRouteChildren: WaitersWaiterIdRouteChildren = {
+  WaitersWaiterIdOrdersOrderIdRoute: WaitersWaiterIdOrdersOrderIdRoute,
+}
+
+const WaitersWaiterIdRouteWithChildren = WaitersWaiterIdRoute._addFileChildren(
+  WaitersWaiterIdRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/restaurant-hours': typeof AdminRestaurantHoursRoute
   '/demo/clerk': typeof DemoClerkRoute
-  '/demo/convex': typeof DemoConvexRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
+  '/waiters/$waiterId': typeof WaitersWaiterIdRouteWithChildren
+  '/waiters/new': typeof WaitersNewRoute
+  '/restaurants': typeof RestaurantsIndexRoute
+  '/waiters': typeof WaitersIndexRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
+  '/admin/products/unavailable': typeof AdminProductsUnavailableRoute
+  '/admin/products': typeof AdminProductsIndexRoute
+  '/admin/products/$productId/edit': typeof AdminProductsProductIdEditRoute
+  '/waiters/$waiterId/orders/$orderId': typeof WaitersWaiterIdOrdersOrderIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/restaurant-hours': typeof AdminRestaurantHoursRoute
   '/demo/clerk': typeof DemoClerkRoute
-  '/demo/convex': typeof DemoConvexRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
+  '/waiters/$waiterId': typeof WaitersWaiterIdRouteWithChildren
+  '/waiters/new': typeof WaitersNewRoute
+  '/restaurants': typeof RestaurantsIndexRoute
+  '/waiters': typeof WaitersIndexRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
+  '/admin/products/unavailable': typeof AdminProductsUnavailableRoute
+  '/admin/products': typeof AdminProductsIndexRoute
+  '/admin/products/$productId/edit': typeof AdminProductsProductIdEditRoute
+  '/waiters/$waiterId/orders/$orderId': typeof WaitersWaiterIdOrdersOrderIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/restaurant-hours': typeof AdminRestaurantHoursRoute
   '/demo/clerk': typeof DemoClerkRoute
-  '/demo/convex': typeof DemoConvexRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
+  '/waiters/$waiterId': typeof WaitersWaiterIdRouteWithChildren
+  '/waiters/new': typeof WaitersNewRoute
+  '/restaurants/': typeof RestaurantsIndexRoute
+  '/waiters/': typeof WaitersIndexRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
+  '/admin/products/unavailable': typeof AdminProductsUnavailableRoute
+  '/admin/products/': typeof AdminProductsIndexRoute
+  '/admin/products/$productId/edit': typeof AdminProductsProductIdEditRoute
+  '/waiters/$waiterId/orders/$orderId': typeof WaitersWaiterIdOrdersOrderIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin/dashboard'
+    | '/admin/restaurant-hours'
     | '/demo/clerk'
-    | '/demo/convex'
-    | '/demo/table'
-    | '/demo/tanstack-query'
-    | '/demo/form/address'
-    | '/demo/form/simple'
+    | '/waiters/$waiterId'
+    | '/waiters/new'
+    | '/restaurants'
+    | '/waiters'
+    | '/admin/products/new'
+    | '/admin/products/unavailable'
+    | '/admin/products'
+    | '/admin/products/$productId/edit'
+    | '/waiters/$waiterId/orders/$orderId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/dashboard'
+    | '/admin/restaurant-hours'
     | '/demo/clerk'
-    | '/demo/convex'
-    | '/demo/table'
-    | '/demo/tanstack-query'
-    | '/demo/form/address'
-    | '/demo/form/simple'
+    | '/waiters/$waiterId'
+    | '/waiters/new'
+    | '/restaurants'
+    | '/waiters'
+    | '/admin/products/new'
+    | '/admin/products/unavailable'
+    | '/admin/products'
+    | '/admin/products/$productId/edit'
+    | '/waiters/$waiterId/orders/$orderId'
   id:
     | '__root__'
     | '/'
+    | '/admin/dashboard'
+    | '/admin/restaurant-hours'
     | '/demo/clerk'
-    | '/demo/convex'
-    | '/demo/table'
-    | '/demo/tanstack-query'
-    | '/demo/form/address'
-    | '/demo/form/simple'
+    | '/waiters/$waiterId'
+    | '/waiters/new'
+    | '/restaurants/'
+    | '/waiters/'
+    | '/admin/products/new'
+    | '/admin/products/unavailable'
+    | '/admin/products/'
+    | '/admin/products/$productId/edit'
+    | '/waiters/$waiterId/orders/$orderId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminRestaurantHoursRoute: typeof AdminRestaurantHoursRoute
   DemoClerkRoute: typeof DemoClerkRoute
-  DemoConvexRoute: typeof DemoConvexRoute
-  DemoTableRoute: typeof DemoTableRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  DemoFormAddressRoute: typeof DemoFormAddressRoute
-  DemoFormSimpleRoute: typeof DemoFormSimpleRoute
+  WaitersWaiterIdRoute: typeof WaitersWaiterIdRouteWithChildren
+  WaitersNewRoute: typeof WaitersNewRoute
+  RestaurantsIndexRoute: typeof RestaurantsIndexRoute
+  WaitersIndexRoute: typeof WaitersIndexRoute
+  AdminProductsNewRoute: typeof AdminProductsNewRoute
+  AdminProductsUnavailableRoute: typeof AdminProductsUnavailableRoute
+  AdminProductsIndexRoute: typeof AdminProductsIndexRoute
+  AdminProductsProductIdEditRoute: typeof AdminProductsProductIdEditRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminRestaurantHoursRoute: AdminRestaurantHoursRoute,
   DemoClerkRoute: DemoClerkRoute,
-  DemoConvexRoute: DemoConvexRoute,
-  DemoTableRoute: DemoTableRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
-  DemoFormAddressRoute: DemoFormAddressRoute,
-  DemoFormSimpleRoute: DemoFormSimpleRoute,
+  WaitersWaiterIdRoute: WaitersWaiterIdRouteWithChildren,
+  WaitersNewRoute: WaitersNewRoute,
+  RestaurantsIndexRoute: RestaurantsIndexRoute,
+  WaitersIndexRoute: WaitersIndexRoute,
+  AdminProductsNewRoute: AdminProductsNewRoute,
+  AdminProductsUnavailableRoute: AdminProductsUnavailableRoute,
+  AdminProductsIndexRoute: AdminProductsIndexRoute,
+  AdminProductsProductIdEditRoute: AdminProductsProductIdEditRoute,
 }
 
 export const routeTree = rootRoute
@@ -214,34 +359,61 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/admin/dashboard",
+        "/admin/restaurant-hours",
         "/demo/clerk",
-        "/demo/convex",
-        "/demo/table",
-        "/demo/tanstack-query",
-        "/demo/form/address",
-        "/demo/form/simple"
+        "/waiters/$waiterId",
+        "/waiters/new",
+        "/restaurants/",
+        "/waiters/",
+        "/admin/products/new",
+        "/admin/products/unavailable",
+        "/admin/products/",
+        "/admin/products/$productId/edit"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/admin/dashboard": {
+      "filePath": "admin/dashboard.tsx"
+    },
+    "/admin/restaurant-hours": {
+      "filePath": "admin/restaurant-hours.tsx"
+    },
     "/demo/clerk": {
       "filePath": "demo.clerk.tsx"
     },
-    "/demo/convex": {
-      "filePath": "demo.convex.tsx"
+    "/waiters/$waiterId": {
+      "filePath": "waiters/$waiterId.tsx",
+      "children": [
+        "/waiters/$waiterId/orders/$orderId"
+      ]
     },
-    "/demo/table": {
-      "filePath": "demo.table.tsx"
+    "/waiters/new": {
+      "filePath": "waiters/new.tsx"
     },
-    "/demo/tanstack-query": {
-      "filePath": "demo.tanstack-query.tsx"
+    "/restaurants/": {
+      "filePath": "restaurants/index.tsx"
     },
-    "/demo/form/address": {
-      "filePath": "demo.form.address.tsx"
+    "/waiters/": {
+      "filePath": "waiters/index.tsx"
     },
-    "/demo/form/simple": {
-      "filePath": "demo.form.simple.tsx"
+    "/admin/products/new": {
+      "filePath": "admin/products/new.tsx"
+    },
+    "/admin/products/unavailable": {
+      "filePath": "admin/products/unavailable.tsx"
+    },
+    "/admin/products/": {
+      "filePath": "admin/products/index.tsx"
+    },
+    "/admin/products/$productId/edit": {
+      "filePath": "admin/products/$productId.edit.tsx"
+    },
+    "/waiters/$waiterId/orders/$orderId": {
+      "filePath": "waiters/$waiterId.orders.$orderId.tsx",
+      "parent": "/waiters/$waiterId"
     }
   }
 }
